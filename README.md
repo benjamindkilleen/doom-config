@@ -10,5 +10,5 @@ instructions from the [Doom](github.com/hlissner) docs, with the exception that 
 ```sh
 git clone git@github.com:benjamindkilleen/emacs-config.git ~/.config/doom
 git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-~/.emacs.d/bin/doom install; ~/.config/doom/setup.sh
+~/.emacs.d/bin/doom install
 ```
