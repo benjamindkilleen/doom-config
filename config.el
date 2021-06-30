@@ -33,7 +33,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -58,15 +58,12 @@
  '("~/projects/" "~/writing/" "~/jhu/" "~/projects/tutoring/" "~/papers"))
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 (setq-default fill-column 100)          ; TODO: make "default line width" based on editorconfig
-(defvar olivetti-body-width 100)
+;; (setq zen-mode-margin-width 100)
 
 ;; Mappings
 (map!
  :leader
  :desc "Auto-fill mode" "t a" 'auto-fill-mode)
-(map!
- :leader
- :desc "Olivetti mode" "t o" 'olivetti-mode)
 
 ;; Re-map "j-k" to escape when in INSERT mode.
 (use-package! key-chord)
