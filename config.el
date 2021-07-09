@@ -104,6 +104,10 @@
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
 
+;; Haskell
+(custom-set-variables
+ '(haskell-stylish-on-save t))
+
 ;; Treemacs superfluous files
 (after! treemacs
   (defvar treemacs-file-ignore-extensions '()
