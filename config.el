@@ -103,6 +103,72 @@
 
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
+;; poetry
+(use-package! poetry
+  :ensure t
+  :hook
+  ;; activate poetry-tracking-mode when python-mode is active
+  (python-mode . poetry-tracking-mode)
+  )
+
+;; ....
+
+;; lsp-mode configs
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :custom
+  (lsp-auto-guess-root +1)
+  :config
+  (lsp-enable-imenu)
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (python-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration)
+	 (lsp-after-open . 'lsp-enable-imenu)
+	 )
+  :commands (lsp lsp-deferred))
+
+;; lsp Python
+(use-package lsp-python-ms
+  :after poetry
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :config
+  (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
+		    ;; attempt to activate Poetry env first
+		    (when (stringp (poetry-find-project-root))
+		      (poetry-venv-workon)
+		      )
+  :hook
+  (
+   (python-mode . (lambda ()
+                    (require 'lsp-python-ms)
+                    (lsp-deferred)
+		    ))
+   ;; if .dir-locals exists, read it first, then activate mspyls
+   (hack-local-variables . (lambda ()
+			     (when (derived-mode-p 'python-mode)
+			       (require 'lsp-python-ms)
+			       (lsp-deferred))
+			     ))
+   )
+  )
+
+;; Pyenv in projectile
+(require 'pyenv-mode)
+
+(defun projectile-pyenv-mode-set ()
+  "Set pyenv version matching project name."
+  (let ((project (projectile-project-name)))
+    (if (member project (pyenv-mode-versions))
+        (pyenv-mode-set project)
+      (pyenv-mode-unset))))
+
+(add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
 
 ;; Haskell
 (custom-set-variables
