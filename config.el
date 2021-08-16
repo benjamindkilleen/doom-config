@@ -24,8 +24,8 @@
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; `load-theme' function.
+(setq doom-theme 'doom-gruvbox)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -70,6 +70,34 @@
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
 
+;; adjust indentation
+(defun unindent-dwim (&optional count-arg)
+  "Keeps relative spacing in the region.  Unindents to the next multiple of the current tab-width"
+  (interactive)
+  (let ((deactivate-mark nil)
+        (beg (or (and mark-active (region-beginning)) (line-beginning-position)))
+        (end (or (and mark-active (region-end)) (line-end-position)))
+        (min-indentation)
+        (count (or count-arg 1)))
+    (save-excursion
+      (goto-char beg)
+      (while (< (point) end)
+        (add-to-list 'min-indentation (current-indentation))
+        (forward-line)))
+    (if (< 0 count)
+        (if (not (< 0 (apply 'min min-indentation)))
+            (error "Can't indent any more.  Try `indent-rigidly` with a negative arg.")))
+    (if (> 0 count)
+        (indent-rigidly beg end (* (- 0 tab-width) count))
+      (let (
+            (indent-amount
+             (apply 'min (mapcar (lambda (x) (- 0 (mod x tab-width))) min-indentation))))
+        (indent-rigidly beg end (or
+                                 (and (< indent-amount 0) indent-amount)
+                                 (* (or count 1) (- 0 tab-width))))))))
+(global-set-key (kbd "s-[") 'unindent-dwim)
+(global-set-key (kbd "s-]") (lambda () (interactive) (unindent-dwim -1)))
+
 ;; LaTeX config
 ;; TODO: not working for some reason.
 ;; (add-hook! tex-mode 'hl-todo-mode)
@@ -104,12 +132,12 @@
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
 ;; poetry
-(use-package! poetry
-  :ensure t
-  :hook
-  ;; activate poetry-tracking-mode when python-mode is active
-  (python-mode . poetry-tracking-mode)
-  )
+;; (use-package! poetry
+;;   :ensure t
+;;   :hook
+;;   ;; activate poetry-tracking-mode when python-mode is active
+;;   (python-mode . poetry-tracking-mode)
+;;   )
 
 ;; ....
 
@@ -132,43 +160,43 @@
   :commands (lsp lsp-deferred))
 
 ;; lsp Python
-(use-package lsp-python-ms
-  :after poetry
-  :ensure t
-  :init
-  (setq lsp-python-ms-auto-install-server t)
-  :config
-  (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
-		    ;; attempt to activate Poetry env first
-		    (when (stringp (poetry-find-project-root))
-		      (poetry-venv-workon)
-		      )
-  :hook
-  (
-   (python-mode . (lambda ()
-                    (require 'lsp-python-ms)
-                    (lsp-deferred)
-		    ))
-   ;; if .dir-locals exists, read it first, then activate mspyls
-   (hack-local-variables . (lambda ()
-			     (when (derived-mode-p 'python-mode)
-			       (require 'lsp-python-ms)
-			       (lsp-deferred))
-			     ))
-   )
-  )
+;; (use-package lsp-python-ms
+;;   :after poetry
+;;   :ensure t
+;;   :init
+;;   (setq lsp-python-ms-auto-install-server t)
+;;   :config
+;;   (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
+;; 		    ;; attempt to activate Poetry env first
+;; 		    (when (stringp (poetry-find-project-root))
+;; 		      (poetry-venv-workon)
+;; 		      )
+;;   :hook
+;;   (
+;;    (python-mode . (lambda ()
+;;                     (require 'lsp-python-ms)
+;;                     (lsp-deferred)
+;; 		    ))
+;;    ;; if .dir-locals exists, read it first, then activate mspyls
+;;    (hack-local-variables . (lambda ()
+;; 			     (when (derived-mode-p 'python-mode)
+;; 			       (require 'lsp-python-ms)
+;; 			       (lsp-deferred))
+;; 			     ))
+;;    )
+;;   )
 
 ;; Pyenv in projectile
-(require 'pyenv-mode)
+;; (require 'pyenv-mode)
 
-(defun projectile-pyenv-mode-set ()
-  "Set pyenv version matching project name."
-  (let ((project (projectile-project-name)))
-    (if (member project (pyenv-mode-versions))
-        (pyenv-mode-set project)
-      (pyenv-mode-unset))))
+;; (defun projectile-pyenv-mode-set ()
+;;   "Set pyenv version matching project name."
+;;   (let ((project (projectile-project-name)))
+;;     (if (member project (pyenv-mode-versions))
+;;         (pyenv-mode-set project)
+;;       (pyenv-mode-unset))))
 
-(add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
+;; (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
 
 ;; Haskell
 (custom-set-variables
