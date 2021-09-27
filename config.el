@@ -120,7 +120,7 @@
         (word-count
          (with-output-to-string
            (with-current-buffer standard-output
-             (call-process "texcount" nil t nil "-0" enc-opt this-file)
+             (call-process "texcount" nil t nil "-0" "-merge" enc-opt this-file)
              ) ) ) )
     (message word-count)
     ) )
@@ -132,12 +132,12 @@
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
 ;; poetry
-;; (use-package! poetry
-;;   :ensure t
-;;   :hook
-;;   ;; activate poetry-tracking-mode when python-mode is active
-;;   (python-mode . poetry-tracking-mode)
-;;   )
+(use-package! poetry
+  :ensure t
+  :hook
+  ;; activate poetry-tracking-mode when python-mode is active
+  (python-mode . poetry-tracking-mode)
+  )
 
 ;; ....
 
@@ -160,31 +160,31 @@
   :commands (lsp lsp-deferred))
 
 ;; lsp Python
-;; (use-package lsp-python-ms
-;;   :after poetry
-;;   :ensure t
-;;   :init
-;;   (setq lsp-python-ms-auto-install-server t)
-;;   :config
-;;   (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
-;; 		    ;; attempt to activate Poetry env first
-;; 		    (when (stringp (poetry-find-project-root))
-;; 		      (poetry-venv-workon)
-;; 		      )
-;;   :hook
-;;   (
-;;    (python-mode . (lambda ()
-;;                     (require 'lsp-python-ms)
-;;                     (lsp-deferred)
-;; 		    ))
-;;    ;; if .dir-locals exists, read it first, then activate mspyls
-;;    (hack-local-variables . (lambda ()
-;; 			     (when (derived-mode-p 'python-mode)
-;; 			       (require 'lsp-python-ms)
-;; 			       (lsp-deferred))
-;; 			     ))
-;;    )
-;;   )
+(use-package lsp-python-ms
+  :after poetry
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :config
+  (put 'lsp-python-ms-python-executable 'safe-local-variable 'stringp)
+  ;; attempt to activate Poetry env first
+  (when (stringp (poetry-find-project-root))
+    (poetry-venv-workon)
+    )
+  :hook
+  (
+   (python-mode . (lambda ()
+                    (require 'lsp-python-ms)
+                    (lsp-deferred)
+                    ))
+   ;; if .dir-locals exists, read it first, then activate mspyls
+   (hack-local-variables . (lambda ()
+                             (when (derived-mode-p 'python-mode)
+                               (require 'lsp-python-ms)
+                               (lsp-deferred))
+                             ))
+   )
+  )
 
 ;; Pyenv in projectile
 ;; (require 'pyenv-mode)
