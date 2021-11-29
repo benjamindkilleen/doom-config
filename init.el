@@ -149,20 +149,21 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org                ; organize your plain life in plain text
-        +dragndrop
-        +jupyter
-        +pandoc
-        +present
-        +pretty                         ; potentially slow
-       )
+       ;; (org                ; organize your plain life in plain text
+       ;;  +dragndrop
+       ;;  +jupyter
+       ;;  +pandoc
+       ;;  +present
+       ;;  +pretty                         ; potentially slow
+       ;; )
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python
         +conda
         +lsp
-        +pyenv
+        +pyright
+        +poetry
        )            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs

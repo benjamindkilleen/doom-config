@@ -50,4 +50,3 @@
 ;(unpin! t)
 
 (package! key-chord)
-(package! poetry)
