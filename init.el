@@ -17,6 +17,9 @@
 ;; https://github.com/hlissner/doom-emacs/issues/2447
 (setq evil-respect-visual-line-mode t)
 
+;; https://www.reddit.com/r/emacs/comments/p5afjn/why_is_lspmode_starting_python_language_server_in/
+;; (setq lsp-pyright-multi-root nil)
+
 (doom! :input
        ;;chinese
        ;;japanese
@@ -162,8 +165,8 @@
        (python
         +conda
         +lsp
-        +pyright
-        +poetry
+        ;; +pyright
+        ;; +poetry
        )            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs

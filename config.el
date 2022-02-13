@@ -102,6 +102,8 @@
 ;; TODO: not working for some reason.
 ;; (add-hook! tex-mode 'hl-todo-mode)
 (setq! flycheck-checker-error-threshold 1001)
+(map! :map cdlatex-mode-map
+    :i "TAB" #'cdlatex-tab)
 
 ;;
 ;; TeXcount setup for TeXcount version 2.3 and later
