@@ -104,6 +104,8 @@
 (setq! flycheck-checker-error-threshold 1001)
 (map! :map cdlatex-mode-map
     :i "TAB" #'cdlatex-tab)
+(after! tex
+  (remove-hook 'TeX-update-style-hook #'rainbow-delimiters-mode))
 
 ;;
 ;; TeXcount setup for TeXcount version 2.3 and later
