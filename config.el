@@ -65,6 +65,10 @@
  :leader
  :desc "Auto-fill mode" "t a" 'auto-fill-mode)
 
+(map!
+ :leader
+ :desc "Open Twitter in a workspace" "TAB t" '=twitter)
+
 ;; Re-map "j-k" to escape when in INSERT mode.
 (use-package! key-chord)
 (key-chord-mode 1)
