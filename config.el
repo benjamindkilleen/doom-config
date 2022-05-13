@@ -61,9 +61,13 @@
 ;; (setq zen-mode-margin-width 100)
 
 ;; Mappings
+;; (map!
+;;  :leader
+;;  :desc "Auto-fill mode" "t a" 'auto-fill-mode)
+
 (map!
  :leader
- :desc "Auto-fill mode" "t a" 'auto-fill-mode)
+ :desc "Autocompletion" "t a" '+company/toggle-auto-completion)
 
 (map!
  :leader
@@ -136,6 +140,9 @@
  :after tex-mode
  :leader
  :desc "Word count" "f w" 'texcount )
+
+(map! :map cdlatex-mode-map
+    :i "TAB" #'cdlatex-tab)
 
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
