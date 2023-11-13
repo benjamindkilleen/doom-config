@@ -51,3 +51,4 @@
 
 (package! key-chord)
 (package! exec-path-from-shell)
+(package! mixed-pitch :disable t)
