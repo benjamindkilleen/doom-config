@@ -52,3 +52,6 @@
 (package! key-chord)
 (package! exec-path-from-shell)
 (package! mixed-pitch :disable t)
+
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
