@@ -119,7 +119,8 @@
       :i "TAB" #'cdlatex-tab)
 (after! tex
   (remove-hook 'TeX-update-style-hook #'rainbow-delimiters-mode))
-
+(after! tex
+  (remove-hook 'TeX-mode-hook #'company-mode))
 
 
 ;;
