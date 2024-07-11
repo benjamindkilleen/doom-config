@@ -24,6 +24,9 @@
 ;; (setq doom-font (font-spec :family "TimesNewRoman" :size 14 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
+;; Enable local variables
+(setq enable-local-variables t)
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function.
@@ -57,7 +60,7 @@
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq projectile-project-search-path
- '("~/projects/" "~/writing/" "~/jhu/" "~/projects/tutoring/" "~/papers" "~/src"))
+      '("~/home/projects/" "~/home/writing/" "~/home/papers/"))
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 (setq-default fill-column 100)          ; TODO: make "default line width" based on editorconfig
 ;; (setq zen-mode-margin-width 100)
@@ -71,9 +74,9 @@
  :leader
  :desc "Autocompletion" "t a" '+company/toggle-auto-completion)
 
-(map!
- :leader
- :desc "Open Twitter in a workspace" "TAB t" '=twitter)
+;; (map!
+;;  :leader
+;;  :desc "Open Twitter in a workspace" "TAB t" '=twitter)
 
 ;; Re-map "j-k" to escape when in INSERT mode.
 (use-package! key-chord)
@@ -113,7 +116,7 @@
 ;; (add-hook! tex-mode 'hl-todo-mode)
 (setq! flycheck-checker-error-threshold 1001)
 (map! :map cdlatex-mode-map
-    :i "TAB" #'cdlatex-tab)
+      :i "TAB" #'cdlatex-tab)
 (after! tex
   (remove-hook 'TeX-update-style-hook #'rainbow-delimiters-mode))
 
@@ -147,7 +150,7 @@
 
 ;; cdlatex things and custom mappings
 (map! :map cdlatex-mode-map
-    :i "TAB" #'cdlatex-tab)
+      :i "TAB" #'cdlatex-tab)
 
 ;; Python
 ;; (add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
