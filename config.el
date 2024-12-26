@@ -57,10 +57,13 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+(use-package! exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq projectile-project-search-path
-      '("~/home/projects/" "~/home/writing/" "~/home/papers/"))
+      '("~/home/projects/" "~/home/writing/" "~/home/papers/" "~/home/"))
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 (setq-default fill-column 100)          ; TODO: make "default line width" based on editorconfig
 ;; (setq zen-mode-margin-width 100)
@@ -122,6 +125,21 @@
 (after! tex
   (remove-hook 'TeX-mode-hook #'company-mode))
 
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(tex-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 
 ;;
 ;; TeXcount setup for TeXcount version 2.3 and later
@@ -278,3 +296,18 @@
         "*/.auctex-auto"
         "*/_region_.log"
         "*/_region_.tex"))
+
+(custom-set-faces
+ '(markdown-header-face-1 ((t (:height 1.5))))
+ '(markdown-header-face-2 ((t (:height 1.4))))
+ '(markdown-header-face-3 ((t (:height 1.3))))
+ '(markdown-header-face-4 ((t (:height 1.2))))
+ '(markdown-header-face-5 ((t (:height 1.1))))
+ '(markdown-header-face-6 ((t (:height 1.0)))))
+
+(custom-set-faces
+ '(font-latex-sectioning-1-face ((t (:height 1.5))))
+ '(font-latex-sectioning-2-face ((t (:height 1.4))))
+ '(font-latex-sectioning-3-face ((t (:height 1.3))))
+ '(font-latex-sectioning-4-face ((t (:height 1.2))))
+ '(font-latex-sectioning-5-face ((t (:height 1.1)))))
