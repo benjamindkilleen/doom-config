@@ -311,3 +311,6 @@
  '(font-latex-sectioning-3-face ((t (:height 1.3))))
  '(font-latex-sectioning-4-face ((t (:height 1.2))))
  '(font-latex-sectioning-5-face ((t (:height 1.1)))))
+
+;; Fix issue with wrong latex mode loading
+(setq major-mode-remap-alist major-mode-remap-defaults)

@@ -8,11 +8,14 @@
    '("a138ec18a6b926ea9d66e61aac28f5ce99739cf38566876dc31e29ec8757f6e2" default))
  '(haskell-stylish-on-save t)
  '(ignored-local-variable-values
-   '((TeX-command-extra-options . "-shell-escape")
+   '((TeX-master . \./main.tex)
+     (TeX-command-extra-options . "-shell-escape")
      (TeX-master . \../outline)))
  '(package-selected-packages '(exec-path-from-shell python-docstring key-chord))
  '(safe-local-variable-values
-   '((TeX-master . "../main.tex")
+   '((TeX-master . "./main.tex")
+     (TeX-master . t)
+     (TeX-master . "../main.tex")
      (TeX-command-extra-options . "-shell-escape --enable-write18 --synctex=1")))
  '(warning-suppress-types '((lsp-on-idle-hook)))
  '(writeroom-width 50))
